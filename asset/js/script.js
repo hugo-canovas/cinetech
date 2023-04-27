@@ -1,30 +1,5 @@
+import {createCard} from "./createCard.js";
 const api_key = "96931d241e200538d71c52e3e31a5b0e";
-
-// création d'une card pour l'affichage des films
-function createCard(type, classNames, attributes, content){
-    const card = document.createElement(type);
-
-    // ajout du nom des classes
-    if(classNames){
-        card.classList.add(...classNames);
-    }
-
-    if(attributes){
-        for(const [key, value] of Object.entries(attributes)){
-            card.setAttribute(key, value);
-        }
-    }
-
-    if(content){
-        if(typeof content === 'string'){
-            card.textContent = content;
-        }else{
-            card.appendChild(content);
-        }
-    }
-
-    return card;
-}
 
 // Affichage des films dernièrement sorti
 const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${api_key}&language=en-US`;
@@ -32,7 +7,7 @@ fetch(url)
     .then((response) => response.json())
     .then((data) => {
         let totalPages = data.total_pages;
-        for(i = 1; i <= `${totalPages}`; i++){
+        for(let i = 1; i <= `${totalPages}`; i++){
             fetch(url+"&page="+i)
                 .then(response => response.json())
                 .then(data => {
@@ -44,13 +19,14 @@ fetch(url)
                             const img = item.poster_path;
                             const srcImg = `https://image.tmdb.org/t/p/w500${img}`;
                             
-                            const newCard = createCard('div', ['flex-column']);
+                            const newCard = createCard('div', ['flex-column', 'h-[350px]']);
                             const newTitle = createCard('p', ['text-center', 'w-[200px]'], {}, `${title}`);
                             const newImg = createCard('img',['max-w-none', 'w-[200px]', 'h-[300px]'], {src: `${srcImg}`});
 
                             document.getElementById('nowPlaying').appendChild(newCard);
                             newCard.appendChild(newImg);
-                            newCard.appendChild(newTitle);                        
+                            newCard.appendChild(newTitle);
+                                                
                     });
             })
         } 
