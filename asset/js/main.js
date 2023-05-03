@@ -24,7 +24,7 @@ fetch(url)
                             const newPath = createCard('a', [], {href: `${movieDetails}`})
                             const newTitle = createCard('p', ['text-center', 'w-[200px]'], {}, `${title}`);
                             const newImg = createCard('img',['max-w-none', 'w-[200px]', 'h-[300px]'], {src: `${srcImg}`});
-    
+                            
                             document.getElementById('nowPlaying').appendChild(newCard);
                             newCard.appendChild(newPath);
                             newPath.appendChild(newImg);
