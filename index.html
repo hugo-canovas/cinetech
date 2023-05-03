@@ -14,7 +14,7 @@
             document.documentElement.classList.remove('dark')
         }
     </script>
-    <script type="module" src="asset/js/script.js"></script>
+    <script type="module" src="asset/js/main.js"></script>
 
     <title>CineTech</title>
 </head>
@@ -59,12 +59,32 @@
         </nav>
     </header>
 
-    
-    <div class="flex overflow-x-scroll overflow-y-hidden gap-5 w-full px-16 pt-8 dark:bg-gray-800 dark:text-white" id="nowPlaying">
-        
+    <div class="flex flex-col pt-8 px-16 dark:bg-gray-800 dark:text-white">
+      <h2>les nouveaux films</h2>
+      <div class="flex overflow-x-scroll overflow-y-hidden gap-5 w-full pt-8 dark:bg-gray-800 dark:text-white" id="nowPlaying">
+
+      </div>
+    </div>
+    <div class="flex flex-col pt-8 px-16 dark:bg-gray-800 dark:text-white">
+      <h2>les films les mieux notés...</h2>
+      <div class="flex overflow-x-scroll overflow-y-hidden gap-5 w-full pt-8 dark:bg-gray-800 dark:text-white" id="topRated">
+
+      </div>
+    </div>
+    <div class="flex flex-col pt-8 px-16 dark:bg-gray-800 dark:text-white">
+      <h2>les films à venir...</h2>
+      <div class="flex overflow-x-scroll overflow-y-hidden gap-5 w-full pt-8 dark:bg-gray-800 dark:text-white" id="upComing">
+
+      </div>
+    </div>
+    <div class="flex flex-col pt-8 px-16 dark:bg-gray-800 dark:text-white">
+      <h2>les films populaires...</h2>
+      <div class="flex overflow-x-scroll overflow-y-hidden gap-5 w-full pt-8 dark:bg-gray-800 dark:text-white" id="Popular">
+
+      </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-    <script src="asset/js/darkMode.js"></script>
+    <script src="asset/js/darkmode/darkMode.js"></script>
 </body>
 </html>

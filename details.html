@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,8 +14,8 @@
             document.documentElement.classList.remove('dark')
         }
     </script>
-    <script type="module" src="asset/js/allSeries.js"></script>
-    <title>Toutes les séries | CineTech</title>
+    <script type="module" src="./asset/js/details.js"></script>
+    <title>Document</title>
 </head>
 <body>
     <header>
@@ -58,8 +58,12 @@
         </nav>
     </header>
 
-    <div class="flex flex-wrap justify-center gap-5 w-full px-16 pt-8 dark:bg-gray-800 dark:text-white" id="allSeries">
-        
+    <div class="flex flex-col pt-8 px-16 dark:bg-gray-800 dark:text-white">
+      <div class="flex gap-5 w-full pt-8 dark:bg-gray-800 dark:text-white" id="">
+        <select class="dark:bg-gray-800 dark:text-white" name="genres-select" id="filter">
+
+        </select>
+      </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>

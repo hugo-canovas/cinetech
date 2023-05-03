@@ -1,4 +1,4 @@
-import { createCard } from "./createCard.js";
+import { createCard } from "./module/createCard.js";
 const api_key = "96931d241e200538d71c52e3e31a5b0e";
 
 // Affichage de tous les films
@@ -8,7 +8,7 @@ fetch(url)
 .then((data) => {
     // let totalPages = data.total_pages;
     for(let i = 1; i <= 5; i++){
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${i}&with_watch_monetization_types=flatrate`)
+        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=false&page=${i}&with_watch_monetization_types=flatrate`)
             .then(response => response.json())
             .then(data => {
                 let result = data.results;

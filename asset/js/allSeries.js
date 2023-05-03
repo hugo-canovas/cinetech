@@ -1,4 +1,4 @@
-import { createCard } from "./createCard.js";
+import { createCard } from "./module/createCard.js";
 const api_key = "96931d241e200538d71c52e3e31a5b0e";
 
 // Affichage de toutes les séries
