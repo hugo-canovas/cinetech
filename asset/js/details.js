@@ -26,19 +26,56 @@ fetch(url)
 
     })
 
-// const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${api_key}&language=en-US`;
-// fetch(url)
-//     .then((response) => response.json())
-//     .then((data) => {
-//         console.log(data.genres);
-//         data.genres.map(item => {
-//             console.log(item.name);
-//             const option = createCard('option',[], {value: `${item.name}`}, `${item.name}`);
-//             document.getElementById('filter').appendChild(option);
-
-//         })
+const urlGenres = `https://api.themoviedb.org/3/genre/movie/list?api_key=${api_key}&language=en-US`;
+fetch(urlGenres)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data.genres);
+        data.genres.map(item => {
+            // console.log(item.id);
+            // console.log(item.name);
+        })
         
-//     })
-//     .catch(error => {
-//         console.error(error);
-//     });
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+const urlCast = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${api_key}`;
+fetch(urlCast)
+    .then((response) => response.json())
+    .then((data) => {
+        data.cast.map(item => {
+            const voiceCharacter = item.character;
+            const actorName = item.name;
+            const actorImg = item.profile_path;
+        })
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+const urlSimilar = `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${api_key}&language=en-US`;
+fetch(urlSimilar)
+    .then((response) => response.json())
+    .then((data) => {
+        let totalPages = data.total_pages;
+        for(let i = 1; i <= totalPages; i++){
+            fetch(`${urlSimilar}&page=${i}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.results.map(item => {
+                        if(item.popularity > 150){
+                            item.genre_ids.map(id => {
+                                if(id = 16){
+                                    console.log(item.title);
+                                }
+                            })
+                        }
+                    })
+                })
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    });
