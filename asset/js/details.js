@@ -12,17 +12,30 @@ fetch(url)
         const title = data.title;
         const description = data.overview;
         const dateRelease = data.release_date;
-        data.genres.map(item => {
-            const genresNames = item.name;
-        })
-        data.production_companies.map(item => {
-            const companieNames = item.name;
-        })
         const backdropPath = `https://image.tmdb.org/t/p/original${data.backdrop_path}`;
 
-        const img = createCard('img', ["bg-scroll"], {src: `${backdropPath}`});
+        const img = createCard('img', ["h-full", "bg-scroll", "opacity-90", "dark:opacity-70"], {src: `${backdropPath}`});
+        const movieTitle = createCard('h1', ["absolute", "top-52", "text-2xl"], {}, `${title}`);
+        const movieDescription = createCard('p', ["absolute", "top-64", "w-[33rem]"], {}, `${description}`);
+        const movieRelease = createCard('p', ["absolute", "top-96"], {}, `${dateRelease}`);
 
-        document.body.appendChild(img);
+        document.getElementById('movieDetails').appendChild(img);
+        document.getElementById('movieDetails').appendChild(movieTitle);
+        document.getElementById('movieDetails').appendChild(movieDescription);
+        document.getElementById('movieDetails').appendChild(movieRelease);
+        
+        data.genres.map(item => {
+            const genresNames = item.name;
+            const movieGenre = createCard('p', [], {}, `${genresNames}`);
+            movieRelease.appendChild(movieGenre);
+        })
+        
+        data.production_companies.map(item => {
+            const companieNames = item.name;
+            const movieCompanie = createCard('p', [], {}, `${companieNames}`);
+            movieRelease.appendChild(movieCompanie);
+        })
+
 
     })
 
@@ -30,7 +43,7 @@ const urlGenres = `https://api.themoviedb.org/3/genre/movie/list?api_key=${api_k
 fetch(urlGenres)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data.genres);
+        // console.log(data.genres);
         data.genres.map(item => {
             // console.log(item.id);
             // console.log(item.name);
@@ -48,7 +61,18 @@ fetch(urlCast)
         data.cast.map(item => {
             const voiceCharacter = item.character;
             const actorName = item.name;
-            const actorImg = item.profile_path;
+            const actorImg = `https://image.tmdb.org/t/p/original${item.profile_path}`;
+
+            const newCard = createCard('div', ['flex-column', 'h-[370px]']);
+            // const newPath = createCard('a', [], {href: `${movieDetails}`})
+            const castCharacter = createCard('p', ['text-center',"text-xs", 'w-[200px]'], {}, `${voiceCharacter}`);
+            const castName = createCard('p', ['text-center', 'w-[200px]'], {}, `${actorName}`);
+            const castImg = createCard('img',['max-w-none', 'w-[200px]', 'h-[300px]'], {src: `${actorImg}`});
+
+            document.getElementById('movieCaster').appendChild(newCard);
+            newCard.appendChild(castCharacter);
+            newCard.appendChild(castImg);
+            newCard.appendChild(castName);
         })
     })
     .catch(error => {
