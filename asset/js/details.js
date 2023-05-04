@@ -39,21 +39,6 @@ fetch(url)
 
     })
 
-const urlGenres = `https://api.themoviedb.org/3/genre/movie/list?api_key=${api_key}&language=en-US`;
-fetch(urlGenres)
-    .then((response) => response.json())
-    .then((data) => {
-        // console.log(data.genres);
-        data.genres.map(item => {
-            // console.log(item.id);
-            // console.log(item.name);
-        })
-        
-    })
-    .catch(error => {
-        console.error(error);
-    });
-
 const urlCast = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${api_key}`;
 fetch(urlCast)
     .then((response) => response.json())
@@ -88,13 +73,24 @@ fetch(urlSimilar)
             fetch(`${urlSimilar}&page=${i}`)
                 .then(response => response.json())
                 .then(data => {
+                    console .log(data);
                     data.results.map(item => {
                         if(item.popularity > 150){
-                            item.genre_ids.map(id => {
-                                if(id = 16){
-                                    console.log(item.title);
-                                }
-                            })
+                            
+                                // console.log(item.title);
+                                const similarTitle = item.title;
+                                const similarImg = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
+                                const movieDetails = `details.html?movie=${item.id}`;
+                            
+                                const newCard = createCard('div', ['flex-column', 'h-[350px]']);
+                                const newPath = createCard('a', [], {href: `${movieDetails}`})
+                                const newTitle = createCard('p', ['text-center', 'w-[200px]'], {}, `${similarTitle}`);
+                                const newImg = createCard('img',['max-w-none', 'w-[200px]', 'h-[300px]'], {src: `${similarImg}`});
+                            
+                                document.getElementById('movieSimilar').appendChild(newCard);
+                                newCard.appendChild(newPath);
+                                newPath.appendChild(newImg);
+                                newPath.appendChild(newTitle);                        
                         }
                     })
                 })
