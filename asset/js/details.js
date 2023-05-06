@@ -23,13 +23,42 @@ fetch(url)
         document.getElementById('movieDetails').appendChild(movieTitle);
         document.getElementById('movieDetails').appendChild(movieDescription);
         document.getElementById('movieDetails').appendChild(movieRelease);
-        
+        // console.log(data.genres);
         data.genres.map(item => {
+            // console.log(item);
             const genresNames = item.name;
             const movieGenre = createCard('p', [], {}, `${genresNames}`);
             movieRelease.appendChild(movieGenre);
+            let title = [];
+            title.push(`${item.name}`);
+            // console.log(title);
+            title.map(item => {
+                // console.log(item)
+                fetch(`https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${api_key}&language=en-US`)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    const similarTitle = createCard('h2', [], {}, `${item.name}`);
+                    document.getElementById('genreSimilar').appendChild(similarTitle);
+                    // console.log(item);
+                    // console.log(data);
+                    let totalPages = data.total_pages;
+                    for(let i = 1; i <= totalPages; i++){
+                        fetch(`https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${api_key}&language=en-US&page=${i}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                data.results.map(item => {
+                                    // console.log(item.title);
+                                    // createCard('p', ['text-center', 'w-[200px]'], {}, `${similarTitle}`);
+                                    
+                                })
+                            })
+                    }
+                })
+            })
+            
         })
-        
+
         data.production_companies.map(item => {
             const companieNames = item.name;
             const movieCompanie = createCard('p', [], {}, `${companieNames}`);
@@ -73,7 +102,7 @@ fetch(urlSimilar)
             fetch(`${urlSimilar}&page=${i}`)
                 .then(response => response.json())
                 .then(data => {
-                    console .log(data);
+                    // console .log(data);
                     data.results.map(item => {
                         if(item.popularity > 150){
                             
