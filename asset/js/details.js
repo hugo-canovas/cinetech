@@ -5,6 +5,7 @@ let URL = window.location.href;
 let movieId = URL.split('=')[1];
 
 
+
 const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${api_key}&language=en-US`
 fetch(url)
     .then((response) => response.json())
