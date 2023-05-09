@@ -23,5 +23,3 @@ export function createCard(type, classNames, attributes, content){
 
     return card;
 }
-
-// export default createCard;
