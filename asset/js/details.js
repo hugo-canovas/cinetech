@@ -31,20 +31,45 @@ fetch(url)
             movieRelease.appendChild(movieGenre);
             let genresId = [];
             genresId.push(`${item.id}`);
-            console.log(genresId);
+            const similarMovieGenre = createCard('h2', [], {}, `${genresNames}`);
+            document.getElementById('genreSimilar').appendChild(similarMovieGenre);
             genresId.map(item => {
                 fetch(`https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${api_key}&language=en-US`)
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log(genresNames + genresId);
-                    data.results.map(result => {
-                        // console.log(result);
-                        for(const key in result.genre_ids){
-                            if(genresId == result.genre_ids[key]){
-                                console.log(result);
-                            }
-                        }                        
-                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const totalPages = data.total_pages;
+                        const newContainer = createCard('div', ['flex', 'overflow-x-scroll', 'overflow-y-hidden', 'gap-5', 'w-full', 'pt-8', 'dark:bg-gray-800', 'dark:text-white']);
+                        for(let i = 1; i <= totalPages; i++){
+                            fetch(`https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${api_key}&language=en-US&page=${i}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                data.results.map(result => {
+                                    for(const key in result.genre_ids){
+                                        if(genresId == result.genre_ids[key]){
+                                            if(result.popularity >= 50){
+                                                console.log(result);
+                                                const similarMovieTitle = result.title;
+                                                const similarMovieImg = result.poster_path;
+                                                const similarMovieSrcImg = `https://image.tmdb.org/t/p/w500${similarMovieImg}`;
+                                                const similarMovieDetails = `details.html?movie=${result.id}`;
+                                                
+                                                const newCard = createCard('div', ['flex-column', 'h-[350px]']);
+                                                const newPath = createCard('a', [], {href: `${similarMovieDetails}`})
+                                                const newTitle = createCard('p', ['text-center', 'w-[200px]'], {}, `${similarMovieTitle}`);
+                                                const newImg = createCard('img',['max-w-none', 'w-[200px]', 'h-[300px]'], {src: `${similarMovieSrcImg}`});
+
+                                                similarMovieGenre.appendChild(newContainer);
+                                                newContainer.appendChild(newCard);
+                                                newCard.appendChild(newPath);
+                                                newPath.appendChild(newImg);
+                                                newPath.appendChild(newTitle);
+                                            }
+                                        }
+                                    }                        
+                                })
+                            })
+                        // console.log(i);
+                    }
                 })
             })
         })
@@ -84,43 +109,43 @@ fetch(urlCast)
         console.error(error);
     });
 
-const urlSimilar = `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${api_key}&language=en-US`;
-fetch(urlSimilar)
-    .then((response) => response.json())
-    .then((data) => {
-        let totalPages = data.total_pages;
-        for(let i = 1; i <= totalPages; i++){
-            fetch(`${urlSimilar}&page=${i}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.results.map(item => {
-                        // console.log(item);
-                        // const genres = item.genre_ids;
-                        // console.log(genres);
-                        // if(genres == 12){
-                        //     console.log(item);
-                        // }
-                        if(item.popularity > 150){
+// const urlSimilar = `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${api_key}&language=en-US`;
+// fetch(urlSimilar)
+//     .then((response) => response.json())
+//     .then((data) => {
+//         let totalPages = data.total_pages;
+//         for(let i = 1; i <= totalPages; i++){
+//             fetch(`${urlSimilar}&page=${i}`)
+//                 .then(response => response.json())
+//                 .then(data => {
+//                     data.results.map(item => {
+//                         // console.log(item);
+//                         // const genres = item.genre_ids;
+//                         // console.log(genres);
+//                         // if(genres == 12){
+//                         //     console.log(item);
+//                         // }
+//                         if(item.popularity > 150){
                             
-                                // console.log(item.title);
-                                const similarTitle = item.title;
-                                const similarImg = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
-                                const movieDetails = `details.html?movie=${item.id}`;
+//                                 // console.log(item.title);
+//                                 const similarTitle = item.title;
+//                                 const similarImg = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
+//                                 const movieDetails = `details.html?movie=${item.id}`;
                             
-                                const newCard = createCard('div', ['flex-column', 'h-[350px]']);
-                                const newPath = createCard('a', [], {href: `${movieDetails}`})
-                                const newTitle = createCard('p', ['text-center', 'w-[200px]'], {}, `${similarTitle}`);
-                                const newImg = createCard('img',['max-w-none', 'w-[200px]', 'h-[300px]'], {src: `${similarImg}`});
+//                                 const newCard = createCard('div', ['flex-column', 'h-[350px]']);
+//                                 const newPath = createCard('a', [], {href: `${movieDetails}`})
+//                                 const newTitle = createCard('p', ['text-center', 'w-[200px]'], {}, `${similarTitle}`);
+//                                 const newImg = createCard('img',['max-w-none', 'w-[200px]', 'h-[300px]'], {src: `${similarImg}`});
                             
-                                document.getElementById('movieSimilar').appendChild(newCard);
-                                newCard.appendChild(newPath);
-                                newPath.appendChild(newImg);
-                                newPath.appendChild(newTitle);                        
-                        }
-                    })
-                })
-        }
-    })
-    .catch(error => {
-        console.error(error);
-    });
+//                                 document.getElementById('movieSimilar').appendChild(newCard);
+//                                 newCard.appendChild(newPath);
+//                                 newPath.appendChild(newImg);
+//                                 newPath.appendChild(newTitle);                        
+//                         }
+//                     })
+//                 })
+//         }
+//     })
+//     .catch(error => {
+//         console.error(error);
+//     });
