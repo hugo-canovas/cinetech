@@ -10,12 +10,13 @@ const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${api_key}&la
 fetch(url)
     .then((response) => response.json())
     .then((data) => {
+        console.log(data)
         const title = data.title;
         const description = data.overview;
         const dateRelease = data.release_date;
         const backdropPath = `https://image.tmdb.org/t/p/original${data.backdrop_path}`;
 
-        const img = createCard('img', ["h-full", "bg-scroll", "opacity-90", "dark:opacity-70"], {src: `${backdropPath}`});
+        const img = createCard('img', ["h-full", "opacity-90", "dark:opacity-80"], {src: `${backdropPath}`});
         const movieTitle = createCard('h1', ["absolute", "top-52", "text-2xl"], {}, `${title}`);
         const movieDescription = createCard('p', ["absolute", "top-64", "w-[33rem]"], {}, `${description}`);
         const movieRelease = createCard('p', ["absolute", "top-96"], {}, `${dateRelease}`);
@@ -47,7 +48,6 @@ fetch(url)
                                     for(const key in result.genre_ids){
                                         if(genresId == result.genre_ids[key]){
                                             if(result.popularity >= 50){
-                                                console.log(result);
                                                 const similarMovieTitle = result.title;
                                                 const similarMovieImg = result.poster_path;
                                                 const similarMovieSrcImg = `https://image.tmdb.org/t/p/w500${similarMovieImg}`;
