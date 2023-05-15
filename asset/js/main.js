@@ -14,7 +14,7 @@ fetch(url)
                     let result = data.results;
                     result.map(item => {
                         if(item.popularity >= 300){
-                            console.log(item);
+                            // console.log(item.vote_average);
                             const title = item.title;
                             const img = item.poster_path;
                             const srcImg = `https://image.tmdb.org/t/p/w500${img}`;
@@ -40,7 +40,7 @@ fetch(url)
 
 
 //Affichages des films les mieux notés
-const urlRating = `https://api.themoviedb.org/3/movie/top_rated?api_key=${api_key}&language=en-US`;
+const urlRating = `https://api.themoviedb.org/3/movie/top_rated?api_key=${api_key}&language=fr-FR`;
 fetch(urlRating)
     .then(response => response.json())
     .then(data => {
@@ -78,9 +78,10 @@ const urlComing = `https://api.themoviedb.org/3/movie/upcoming?api_key=${api_key
 fetch(urlComing)
     .then(response => response.json())
     .then(data => {
+        // console.log(data);
         let totalPages = data.total_pages;
         for(let i = 1; i <= 5; i++){
-            fetch(urlComing+"&page="+i)
+            fetch(`${urlComing}&page=${i}`)
             .then(response => response.json())
             .then(data => {
                 let result = data.results;
@@ -133,4 +134,13 @@ fetch(urlPopular)
     .catch(error => {
         console.error(error);
     });
+
+
+const urlLatest = `https://api.themoviedb.org/3/search/multi?api_key=${api_key}&language=en-US&query=marvel&page=1&include_adult=false`;
+fetch(urlLatest)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);    
+    })
+
 
