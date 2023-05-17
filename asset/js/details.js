@@ -15,21 +15,32 @@ fetch(url)
         const description = data.overview;
         const dateRelease = data.release_date;
         const backdropPath = `https://image.tmdb.org/t/p/original${data.backdrop_path}`;
+        const posterPath = `https://image.tmdb.org/t/p/original${data.poster_path}`;
 
-        const img = createCard('img', ["h-full", "opacity-90", "dark:opacity-80"], {src: `${backdropPath}`});
-        const movieTitle = createCard('h1', ["absolute", "top-52", "text-2xl"], {}, `${title}`);
-        const movieDescription = createCard('p', ["absolute", "top-64", "w-[33rem]"], {}, `${description}`);
-        const movieRelease = createCard('p', ["absolute", "top-96"], {}, `${dateRelease}`);
+        const containerDetails = createCard('div', ["flex", "h-full", "w-8/12","gap-5", "backdrop-blur-sm", "bg-white/25", "dark:bg-gray-800/50", "shadow-md", "rounded-3xl", "px-16", "items-center"], {});
+        const divPoster = createCard('div', ["h-[350px]", "w-[200px]", "drop-shadow-lg", "rounded-md", "overflow-hidden"], {});
+        const imgPoster = createCard('img', ["h-full", "w-full", "brightness-125"], {src: `${posterPath}`});
+        const divDetails = createCard('div', ["flex", "flex-col","flex-wrap", "h-[350px]", "w-8/12"], {});
+        const movieTitle = createCard('h2', ["text-2xl", "text-blue-700", "font-bold", "mb-1"], {}, `${title}`);
+        const movieDescription = createCard('p', [], {}, `${description}`);
+        const movieRelease = createCard('p', ["mb-3"], {}, `${dateRelease}`);
 
-        document.getElementById('movieDetails').appendChild(img);
-        document.getElementById('movieDetails').appendChild(movieTitle);
-        document.getElementById('movieDetails').appendChild(movieDescription);
-        document.getElementById('movieDetails').appendChild(movieRelease);
+        document.getElementById('bannerDetails').style.backgroundImage =`url(${backdropPath})`;
+        document.getElementById('bannerDetails').style.backgroundRepeat =`no-repeat`;
+        document.getElementById('bannerDetails').style.backgroundSize =`cover`;
+        document.getElementById('bannerDetails').appendChild(containerDetails);
+        containerDetails.appendChild(divPoster);
+        containerDetails.appendChild(divDetails);
+        divPoster.appendChild(imgPoster);
+        divDetails.appendChild(movieTitle);
+        divDetails.appendChild(movieRelease);
+        divDetails.appendChild(movieDescription);
+
         // console.log(data.genres);
         data.genres.map(item => {
             const genresNames = item.name;
             const movieGenre = createCard('p', [], {}, `${genresNames}`);
-            movieRelease.appendChild(movieGenre);
+            // movieRelease.appendChild(movieGenre);
             let genresId = [];
             genresId.push(`${item.id}`);
             const similarMovieGenre = createCard('h2', [], {}, `${genresNames}`);
@@ -79,7 +90,7 @@ fetch(url)
             const companieNames = item.name;
             // console.log(item);
             const movieCompanie = createCard('p', [], {}, `${companieNames}`);
-            movieRelease.appendChild(movieCompanie);
+            // movieRelease.appendChild(movieCompanie);
         })
 
 
